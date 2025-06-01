@@ -6,7 +6,6 @@
   <title>Happy Birthday Nipu 🎉</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet" />
   <style>
-    /* Reset & base */
     * {
       margin: 0;
       padding: 0;
@@ -21,7 +20,7 @@
       min-height: 100vh;
     }
 
-    /* Hearts background */
+    /* Heart background animation container */
     #hearts {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -30,51 +29,11 @@
       z-index: 0;
     }
 
-    /* Confetti background */
-    #confetti {
-      position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
-      pointer-events: none;
-      overflow: visible;
-      z-index: 1;
-    }
-
-    /* Single confetti piece */
-    .confetti {
-      position: absolute;
-      width: 8px;
-      height: 12px;
-      background-color: #fbc02d;
-      opacity: 0.9;
-      transform-origin: center;
-      border-radius: 2px;
-      animation-name: confettiFall, confettiSpin;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-    }
-
-    @keyframes confettiFall {
-      0% {
-        transform: translateY(-10vh);
-        opacity: 1;
-      }
-      100% {
-        transform: translateY(110vh);
-        opacity: 0;
-      }
-    }
-    @keyframes confettiSpin {
-      0% {
-        rotate: 0deg;
-      }
-      100% {
-        rotate: 360deg;
-      }
-    }
-
-    /* Heart shape */
+    /* Single heart shape */
     .heart {
       position: absolute;
+      width: 20px;
+      height: 20px;
       background-color: #fbc02d;
       transform: rotate(-45deg);
       opacity: 0.6;
@@ -87,6 +46,8 @@
     .heart::after {
       content: "";
       position: absolute;
+      width: 20px;
+      height: 20px;
       background-color: #fbc02d;
       border-radius: 50%;
     }
@@ -110,7 +71,6 @@
       }
     }
 
-    /* Container & text */
     .container {
       text-align: center;
       padding: 2rem 1rem;
@@ -122,8 +82,6 @@
       font-size: 3rem;
       color: #f57f17;
       animation: bounceIn 2s ease-in-out;
-      position: relative;
-      display: inline-block;
     }
     h2 {
       font-weight: 300;
@@ -148,12 +106,12 @@
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1rem;
       max-width: 90%;
-      margin: 2rem auto;
+      margin: 2rem auto 1rem auto;
       animation: fadeInUp 2s ease-in-out;
     }
     .gallery img {
       width: 100%;
-      aspect-ratio: 1 / 1; /* square images */
+      aspect-ratio: 1 / 1;
       object-fit: cover;
       border-radius: 10px;
       box-shadow: 0 2px 10px rgba(0,0,0,0.15);
@@ -163,6 +121,21 @@
     .gallery img:hover {
       transform: scale(1.05);
     }
+
+    /* New section below photos */
+    .below-photos {
+      max-width: 600px;
+      margin: 0 auto 3rem auto;
+      padding: 1rem;
+      background: #fff3e0;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      font-size: 1.1rem;
+      color: #f57f17;
+      animation: fadeIn 3s ease-in-out;
+      letter-spacing: 0.03em;
+    }
+
     .wish-button {
       background-color: #fbc02d;
       color: #fff;
@@ -173,15 +146,25 @@
       font-size: 1.2rem;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: background-color 0.3s;
-      animation: fadeInUp 2s ease-in-out;
+      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
+      animation: pulseGlow 2.5s infinite;
       font-weight: 600;
       letter-spacing: 0.05em;
-      position: relative;
     }
     .wish-button:hover {
       background-color: #f9a825;
+      transform: scale(1.1);
+      box-shadow: 0 6px 25px rgba(251, 192, 45, 0.8);
     }
+    @keyframes pulseGlow {
+      0%, 100% {
+        box-shadow: 0 0 10px 3px rgba(251, 192, 45, 0.6);
+      }
+      50% {
+        box-shadow: 0 0 20px 8px rgba(251, 192, 45, 0.9);
+      }
+    }
+
     .popup {
       display: none;
       position: fixed;
@@ -204,46 +187,6 @@
     }
     .popup.show {
       display: block;
-    }
-
-    /* Birthday cliparts container */
-    .cliparts {
-      position: relative;
-      margin-top: 1rem;
-      height: 60px;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    /* Clipart styles and animations */
-    .clipart {
-      display: inline-block;
-      font-size: 2.5rem;
-      margin: 0 10px;
-      animation: floatBounce 4s ease-in-out infinite;
-      cursor: default;
-      user-select: none;
-    }
-    .clipart.balloon {
-      color: #e91e63;
-      animation-delay: 0s;
-    }
-    .clipart.cake {
-      color: #ff9800;
-      animation-delay: 0.7s;
-    }
-    .clipart.gift {
-      color: #4caf50;
-      animation-delay: 1.4s;
-    }
-    .clipart.party {
-      color: #2196f3;
-      animation-delay: 2.1s;
-    }
-
-    @keyframes floatBounce {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-15px); }
     }
 
     /* Animations */
@@ -313,20 +256,9 @@
   <!-- Background hearts animation -->
   <div id="hearts"></div>
 
-  <!-- Confetti animation container -->
-  <div id="confetti"></div>
-
   <!-- MAIN CONTENT -->
   <div class="container" id="mainContent">
-    <h1>
-      Happy Birthday Nipu 🎂
-      <div class="cliparts">
-        <span class="clipart balloon" title="Balloon">🎈</span>
-        <span class="clipart cake" title="Cake">🎂</span>
-        <span class="clipart gift" title="Gift">🎁</span>
-        <span class="clipart party" title="Party">🎉</span>
-      </div>
-    </h1>
+    <h1>Happy Birthday Nipu 🎂</h1>
     <h2>To my dearest best friend, Nipuni</h2>
     <div class="message">
       <p>
@@ -337,10 +269,7 @@
       </p>
     </div>
 
-    <button class="wish-button" onclick="showPopup()">
-      Click here for a surprise wish 🎁
-      <span class="clipart balloon" style="font-size:1.5rem; margin-left: 8px;">🎈</span>
-    </button>
+    <button class="wish-button" onclick="showPopup()">Click here for a surprise wish 🎁</button>
 
     <div class="popup" id="popup">
       <h3>🎉 Surprise Nipu! 🎉</h3>
@@ -357,6 +286,11 @@
       <img src="2.jpg" alt="Memory 2" />
       <img src="3.jpg" alt="Memory 3" />
       <img src="4.jpg" alt="Memory 4" />
+    </div>
+
+    <!-- New text below photos -->
+    <div class="below-photos">
+      Every moment we’ve shared is a treasure I hold close to my heart. Here's to many more memories, endless laughter, and unbreakable friendship. 💖
     </div>
   </div>
 
@@ -403,37 +337,17 @@
       heartsContainer.appendChild(heart);
     }
 
-    // Create confetti animation
-    const confettiContainer = document.getElementById('confetti');
-    const confettiCount = 50;
-    const colors = ['#fbc02d', '#f57f17', '#ffca28', '#ffb300', '#f9a825'];
-
-    for (let i = 0; i < confettiCount; i++) {
-      const confetti = document.createElement('div');
-      confetti.classList.add('confetti');
-      confetti.style.backgroundColor = colors[i % colors.length];
-      confetti.style.left = Math.random() * 100 + 'vw';
-      confetti.style.width = (5 + Math.random() * 6) + 'px';
-      confetti.style.height = (8 + Math.random() * 8) + 'px';
-
-      const duration = 5 + Math.random() * 5;
-      confetti.style.animationDuration = duration + 's, 2s';
-
-      confetti.style.animationDelay = (Math.random() * 10) + 's, 0s';
-
-      confettiContainer.appendChild(confetti);
-    }
-
     // START OVERLAY to bypass autoplay restrictions
     const overlay = document.getElementById('startOverlay');
     const mainContent = document.getElementById('mainContent');
     const audio = document.getElementById('birthdayMusic');
 
     overlay.addEventListener('click', () => {
-      overlay.style.display = 'none';
-      mainContent.style.display = 'block';
+      overlay.style.display = 'none';       // Hide overlay
+      mainContent.style.display = 'block';  // Show main content
       audio.play().catch(() => {
-        // Autoplay blocked
+        // If autoplay blocked, no worries because user just clicked
+        console.log('Playback failed');
       });
     });
   </script>
