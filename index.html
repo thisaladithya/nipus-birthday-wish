@@ -13,14 +13,21 @@
     }
     body {
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(to bottom right, #fff9c4, #ffe082);
+      background: linear-gradient(-45deg, #fffde7, #fff9c4, #fff59d, #ffeb3b);
+      background-size: 400% 400%;
+      animation: backgroundFade 10s ease infinite;
       color: #333;
       overflow-x: hidden;
       position: relative;
       min-height: 100vh;
     }
 
-    /* Heart background animation container */
+    @keyframes backgroundFade {
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
+    }
+
     #hearts {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -28,28 +35,23 @@
       overflow: hidden;
       z-index: 0;
     }
-
-    /* Single heart shape */
     .heart {
       position: absolute;
+      background-color: #f06292;
       width: 20px;
       height: 20px;
-      background-color: #fbc02d;
       transform: rotate(-45deg);
       opacity: 0.6;
-      animation-name: floatUp;
-      animation-timing-function: linear;
-      animation-iteration-count: infinite;
-      filter: drop-shadow(0 0 4px #fbc02d);
+      animation: floatUp 10s linear infinite;
     }
     .heart::before,
     .heart::after {
       content: "";
       position: absolute;
+      background-color: #f06292;
+      border-radius: 50%;
       width: 20px;
       height: 20px;
-      background-color: #fbc02d;
-      border-radius: 50%;
     }
     .heart::before {
       top: -10px;
@@ -59,14 +61,13 @@
       left: 10px;
       top: 0;
     }
-
     @keyframes floatUp {
       0% {
         transform: translateY(0) rotate(-45deg);
         opacity: 0.7;
       }
       100% {
-        transform: translateY(-120vh) rotate(-45deg);
+        transform: translateY(-100vh) rotate(-45deg);
         opacity: 0;
       }
     }
@@ -74,9 +75,10 @@
     .container {
       text-align: center;
       padding: 2rem 1rem;
-      position: relative;
       z-index: 10;
+      position: relative;
     }
+
     h1 {
       font-family: 'Great Vibes', cursive;
       font-size: 3rem;
@@ -89,51 +91,44 @@
       animation: fadeInUp 2s ease-in-out;
     }
     .message {
-      margin-top: 2rem;
-      padding: 1rem;
-      max-width: 600px;
-      margin-left: auto;
-      margin-right: auto;
+      margin: 2rem auto;
+      padding: 1rem 1.5rem;
+      max-width: 700px;
       background: #fff8e1;
       border-radius: 15px;
       box-shadow: 0 4px 20px rgba(0,0,0,0.1);
       animation: fadeIn 3s ease-in-out;
       font-size: 1.1rem;
-      line-height: 1.5;
+      line-height: 1.6;
     }
     .gallery {
       display: grid;
       grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
       gap: 1rem;
       max-width: 90%;
-      margin: 2rem auto 1rem auto;
-      animation: fadeInUp 2s ease-in-out;
+      margin: 2rem auto;
+      z-index: 2;
     }
     .gallery img {
       width: 100%;
-      aspect-ratio: 1 / 1;
       object-fit: cover;
-      border-radius: 10px;
-      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      border-radius: 12px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.2);
       transition: transform 0.3s;
-      cursor: pointer;
     }
     .gallery img:hover {
       transform: scale(1.05);
     }
 
-    /* New section below photos */
-    .below-photos {
-      max-width: 600px;
-      margin: 0 auto 3rem auto;
-      padding: 1rem;
-      background: #fff3e0;
+    .below-gallery {
+      margin-top: 2rem;
+      padding: 1.5rem;
+      background-color: #fff3e0;
       border-radius: 15px;
-      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
-      font-size: 1.1rem;
-      color: #f57f17;
-      animation: fadeIn 3s ease-in-out;
-      letter-spacing: 0.03em;
+      max-width: 700px;
+      margin-left: auto;
+      margin-right: auto;
+      animation: fadeInUp 2s;
     }
 
     .wish-button {
@@ -142,26 +137,23 @@
       padding: 0.8rem 2.5rem;
       border: none;
       border-radius: 25px;
-      margin-top: 2rem;
       font-size: 1.2rem;
       cursor: pointer;
       box-shadow: 0 4px 15px rgba(0,0,0,0.3);
-      transition: background-color 0.3s, transform 0.3s, box-shadow 0.3s;
-      animation: pulseGlow 2.5s infinite;
       font-weight: 600;
       letter-spacing: 0.05em;
+      margin-top: 2rem;
+      animation: bounceGlow 1.8s infinite;
     }
-    .wish-button:hover {
-      background-color: #f9a825;
-      transform: scale(1.1);
-      box-shadow: 0 6px 25px rgba(251, 192, 45, 0.8);
-    }
-    @keyframes pulseGlow {
+
+    @keyframes bounceGlow {
       0%, 100% {
-        box-shadow: 0 0 10px 3px rgba(251, 192, 45, 0.6);
+        transform: scale(1);
+        box-shadow: 0 0 10px #fdd835;
       }
       50% {
-        box-shadow: 0 0 20px 8px rgba(251, 192, 45, 0.9);
+        transform: scale(1.1);
+        box-shadow: 0 0 20px #fbc02d;
       }
     }
 
@@ -189,38 +181,15 @@
       display: block;
     }
 
-    /* Animations */
-    @keyframes fadeInDown {
-      0% { opacity: 0; transform: translateY(-20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeInUp {
-      0% { opacity: 0; transform: translateY(20px); }
-      100% { opacity: 1; transform: translateY(0); }
-    }
-    @keyframes fadeIn {
-      0% { opacity: 0; }
-      100% { opacity: 1; }
-    }
-    @keyframes bounceIn {
-      0% { transform: scale(0.8); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-    @keyframes popIn {
-      0% { transform: scale(0.5); opacity: 0; }
-      100% { transform: scale(1); opacity: 1; }
-    }
-
     footer {
       margin-top: 2rem;
       font-size: 0.9rem;
-      color: #888;
+      color: #666;
       animation: fadeIn 2s;
       position: relative;
       z-index: 10;
     }
 
-    /* START OVERLAY */
     #startOverlay {
       position: fixed;
       top: 0; left: 0; right: 0; bottom: 0;
@@ -239,25 +208,39 @@
       padding: 0 1rem;
     }
 
-    /* Hide main content before start */
     #mainContent {
       display: none;
-      overflow-x: hidden;
+    }
+
+    /* Animations */
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(30px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
     }
   </style>
 </head>
 <body>
 
-  <!-- START OVERLAY -->
-  <div id="startOverlay">
-    Tap anywhere to start the birthday surprise 🎉
-  </div>
+  <!-- Start Overlay -->
+  <div id="startOverlay">Tap anywhere to start the birthday surprise 🎉</div>
 
-  <!-- Background hearts animation -->
+  <!-- Background Hearts -->
   <div id="hearts"></div>
 
-  <!-- MAIN CONTENT -->
-  <div class="container" id="mainContent">
+  <!-- Main Content -->
+  <div id="mainContent" class="container">
     <h1>Happy Birthday Nipu 🎂</h1>
     <h2>To my dearest best friend, Nipuni</h2>
     <div class="message">
@@ -273,12 +256,7 @@
 
     <div class="popup" id="popup">
       <h3>🎉 Surprise Nipu! 🎉</h3>
-      <p>
-        You are one of the most beautiful souls I've ever met.<br />
-        I wish you endless joy, laughter, and love in the year ahead. 💫<br /><br />
-        Stay amazing, my best friend!<br /><br />
-        💛 — Thisal
-      </p>
+      <p>You are one of the most beautiful souls I've ever met.<br />Wishing you endless joy, laughter, and love in the year ahead. 💫<br /><br />Stay amazing! 💛</p>
     </div>
 
     <div class="gallery">
@@ -288,22 +266,29 @@
       <img src="4.jpg" alt="Memory 4" />
     </div>
 
-    <!-- New text below photos -->
-    <div class="below-photos">
-      Every moment we’ve shared is a treasure I hold close to my heart. Here's to many more memories, endless laughter, and unbreakable friendship. 💖
+    <div class="below-gallery">
+      <h3>💌 Little note</h3>
+      <p>I can’t wait to celebrate many more birthdays with you. You’re not just a year older, you’re a year more wonderful!</p>
     </div>
+
+    <footer>Made with 💛 by Thisal for Nipu</footer>
   </div>
 
-  <footer>Made with 💛 by Thisal for Nipu</footer>
-
-  <!-- Audio (initially not autoplaying) -->
   <audio id="birthdayMusic" loop>
-    <source src="song.mp3" type="audio/ogg" />
-    Your browser does not support the audio element.
+    <source src="song.mp3" type="audio/mpeg" />
   </audio>
 
   <script>
-    // Popup show/hide
+    const overlay = document.getElementById('startOverlay');
+    const mainContent = document.getElementById('mainContent');
+    const audio = document.getElementById('birthdayMusic');
+
+    overlay.addEventListener('click', () => {
+      overlay.style.display = 'none';
+      mainContent.style.display = 'block';
+      audio.play().catch(() => {});
+    });
+
     function showPopup() {
       const popup = document.getElementById('popup');
       popup.classList.add('show');
@@ -312,44 +297,19 @@
       }, 6000);
     }
 
-    // Create floating hearts animation
+    // Floating hearts
     const heartsContainer = document.getElementById('hearts');
-    const heartCount = 25;
-
-    for (let i = 0; i < heartCount; i++) {
+    for (let i = 0; i < 20; i++) {
       const heart = document.createElement('div');
       heart.classList.add('heart');
-
-      // Random start position along the width
       heart.style.left = Math.random() * 100 + 'vw';
-
-      // Random size between 15 and 35 px
       const size = 15 + Math.random() * 20;
       heart.style.width = size + 'px';
       heart.style.height = size + 'px';
-
-      // Random animation duration between 8 and 18 seconds
-      heart.style.animationDuration = (8 + Math.random() * 10) + 's';
-
-      // Random animation delay so they float independently
-      heart.style.animationDelay = (Math.random() * 18) + 's';
-
+      heart.style.animationDuration = 8 + Math.random() * 5 + 's';
+      heart.style.animationDelay = Math.random() * 5 + 's';
       heartsContainer.appendChild(heart);
     }
-
-    // START OVERLAY to bypass autoplay restrictions
-    const overlay = document.getElementById('startOverlay');
-    const mainContent = document.getElementById('mainContent');
-    const audio = document.getElementById('birthdayMusic');
-
-    overlay.addEventListener('click', () => {
-      overlay.style.display = 'none';       // Hide overlay
-      mainContent.style.display = 'block';  // Show main content
-      audio.play().catch(() => {
-        // If autoplay blocked, no worries because user just clicked
-        console.log('Playback failed');
-      });
-    });
   </script>
 </body>
 </html>
