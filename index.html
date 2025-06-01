@@ -82,8 +82,6 @@
       font-size: 3rem;
       color: #f57f17;
       animation: bounceIn 2s ease-in-out;
-      position: relative;
-      display: inline-block;
     }
     h2 {
       font-weight: 300;
@@ -124,26 +122,22 @@
       transform: scale(1.05);
     }
     .wish-button {
-      background: linear-gradient(45deg, #fbc02d, #f9a825);
+      background-color: #fbc02d;
       color: #fff;
-      padding: 1.2rem 3rem;
+      padding: 0.8rem 2.5rem;
       border: none;
-      border-radius: 30px;
+      border-radius: 25px;
       margin-top: 2rem;
-      font-size: 1.4rem;
-      font-weight: 600;
+      font-size: 1.2rem;
       cursor: pointer;
-      box-shadow: 0 0 15px rgba(251, 192, 45, 0.7);
-      transition: 
-        background 0.3s ease,
-        box-shadow 0.3s ease,
-        transform 0.3s ease;
+      box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+      transition: background-color 0.3s;
       animation: fadeInUp 2s ease-in-out;
+      font-weight: 600;
+      letter-spacing: 0.05em;
     }
     .wish-button:hover {
-      background: linear-gradient(45deg, #f9a825, #fbc02d);
-      box-shadow: 0 0 30px rgba(249, 168, 37, 1);
-      transform: scale(1.1);
+      background-color: #f9a825;
     }
     .popup {
       display: none;
@@ -169,48 +163,7 @@
       display: block;
     }
 
-    /* Birthday clip arts container */
-    #cliparts {
-      position: fixed;
-      top: 10px;
-      right: 10px;
-      z-index: 15;
-      display: flex;
-      gap: 12px;
-      pointer-events: none;
-      user-select: none;
-    }
-
-    /* Style for SVG icons */
-    #cliparts svg {
-      width: 40px;
-      height: 40px;
-      fill: #fbc02d;
-      filter: drop-shadow(0 0 3px #f9a825);
-      animation: floatClipart 4s ease-in-out infinite;
-      cursor: default;
-    }
-
-    /* Slight up-down floating animation for clip arts */
-    @keyframes floatClipart {
-      0%, 100% { transform: translateY(0); }
-      50% { transform: translateY(-8px); }
-    }
-
-    /* Position some cliparts differently for variety */
-    #cliparts svg:nth-child(2) {
-      animation-delay: 0.3s;
-      fill: #f44336; /* red */
-    }
-    #cliparts svg:nth-child(3) {
-      animation-delay: 0.6s;
-      fill: #4caf50; /* green */
-    }
-    #cliparts svg:nth-child(4) {
-      animation-delay: 0.9s;
-      fill: #2196f3; /* blue */
-    }
-
+    /* Animations */
     @keyframes fadeInDown {
       0% { opacity: 0; transform: translateY(-20px); }
       100% { opacity: 1; transform: translateY(0); }
@@ -231,6 +184,7 @@
       0% { transform: scale(0.5); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
+
     footer {
       margin-top: 2rem;
       font-size: 0.9rem;
@@ -239,45 +193,45 @@
       position: relative;
       z-index: 10;
     }
+
+    /* START OVERLAY */
+    #startOverlay {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background: rgba(251, 192, 45, 0.95);
+      color: #fff;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      font-size: 2rem;
+      text-align: center;
+      cursor: pointer;
+      z-index: 9999;
+      user-select: none;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      padding: 0 1rem;
+    }
+
+    /* Hide main content before start */
+    #mainContent {
+      display: none;
+      overflow-x: hidden;
+    }
   </style>
 </head>
 <body>
 
-  <audio autoplay loop>
-    <source src="song.mp3" type="audio/ogg" />
-    Your browser does not support the audio element.
-  </audio>
-
-  <div id="hearts"></div>
-
-  <!-- Birthday & loving clip arts -->
-  <div id="cliparts" aria-hidden="true">
-    <!-- Balloon -->
-    <svg viewBox="0 0 64 64" aria-label="Balloon">
-      <circle cx="32" cy="24" r="16" />
-      <path d="M32 40v12" stroke="#fff" stroke-width="2" />
-      <path d="M24 52h16l-8 12z" fill="#fbc02d" />
-    </svg>
-    <!-- Birthday Cake -->
-    <svg viewBox="0 0 64 64" aria-label="Birthday Cake">
-      <rect x="12" y="28" width="40" height="20" rx="4" ry="4" />
-      <rect x="20" y="20" width="24" height="8" fill="#f9a825" rx="2" ry="2" />
-      <circle cx="32" cy="18" r="3" fill="#f44336" />
-      <rect x="30" y="10" width="4" height="8" fill="#ffeb3b" />
-    </svg>
-    <!-- Heart -->
-    <svg viewBox="0 0 64 64" aria-label="Heart">
-      <path d="M32 58s26-15 26-34a14 14 0 0 0-28 0 14 14 0 0 0-28 0c0 19 26 34 26 34z" />
-    </svg>
-    <!-- Gift Box -->
-    <svg viewBox="0 0 64 64" aria-label="Gift Box">
-      <rect x="10" y="22" width="44" height="28" rx="4" ry="4" />
-      <path d="M32 22v28M18 22l28 0" stroke="#fff" stroke-width="3" />
-      <path d="M32 22l8-12 8 12" fill="#fbc02d" />
-    </svg>
+  <!-- START OVERLAY -->
+  <div id="startOverlay">
+    Tap anywhere to start the birthday surprise 🎉
   </div>
 
-  <div class="container">
+  <!-- Background hearts animation -->
+  <div id="hearts"></div>
+
+  <!-- MAIN CONTENT -->
+  <div class="container" id="mainContent">
     <h1>Happy Birthday Nipu 🎂</h1>
     <h2>To my dearest best friend, Nipuni</h2>
     <div class="message">
@@ -310,6 +264,12 @@
   </div>
 
   <footer>Made with 💛 by Thisal for Nipu</footer>
+
+  <!-- Audio (initially not autoplaying) -->
+  <audio id="birthdayMusic" loop>
+    <source src="song.mp3" type="audio/ogg" />
+    Your browser does not support the audio element.
+  </audio>
 
   <script>
     // Popup show/hide
@@ -345,6 +305,20 @@
 
       heartsContainer.appendChild(heart);
     }
+
+    // START OVERLAY to bypass autoplay restrictions
+    const overlay = document.getElementById('startOverlay');
+    const mainContent = document.getElementById('mainContent');
+    const audio = document.getElementById('birthdayMusic');
+
+    overlay.addEventListener('click', () => {
+      overlay.style.display = 'none';       // Hide overlay
+      mainContent.style.display = 'block';  // Show main content
+      audio.play().catch(() => {
+        // If autoplay blocked, no worries because user just clicked
+        console.log('Playback failed');
+      });
+    });
   </script>
 </body>
 </html>
