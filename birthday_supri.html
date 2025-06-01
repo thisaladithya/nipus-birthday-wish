@@ -1,0 +1,350 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Happy Birthday Nipu 🎉</title>
+  <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet" />
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+    body {
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(to bottom right, #fff9c4, #ffe082);
+      color: #333;
+      overflow-x: hidden;
+      position: relative;
+      min-height: 100vh;
+    }
+
+    /* Heart background animation container */
+    #hearts {
+      position: fixed;
+      top: 0; left: 0; right: 0; bottom: 0;
+      pointer-events: none;
+      overflow: hidden;
+      z-index: 0;
+    }
+
+    /* Single heart shape */
+    .heart {
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #fbc02d;
+      transform: rotate(-45deg);
+      opacity: 0.6;
+      animation-name: floatUp;
+      animation-timing-function: linear;
+      animation-iteration-count: infinite;
+      filter: drop-shadow(0 0 4px #fbc02d);
+    }
+    .heart::before,
+    .heart::after {
+      content: "";
+      position: absolute;
+      width: 20px;
+      height: 20px;
+      background-color: #fbc02d;
+      border-radius: 50%;
+    }
+    .heart::before {
+      top: -10px;
+      left: 0;
+    }
+    .heart::after {
+      left: 10px;
+      top: 0;
+    }
+
+    @keyframes floatUp {
+      0% {
+        transform: translateY(0) rotate(-45deg);
+        opacity: 0.7;
+      }
+      100% {
+        transform: translateY(-120vh) rotate(-45deg);
+        opacity: 0;
+      }
+    }
+
+    .container {
+      text-align: center;
+      padding: 2rem 1rem;
+      position: relative;
+      z-index: 10;
+    }
+    h1 {
+      font-family: 'Great Vibes', cursive;
+      font-size: 3rem;
+      color: #f57f17;
+      animation: bounceIn 2s ease-in-out;
+      position: relative;
+      display: inline-block;
+    }
+    h2 {
+      font-weight: 300;
+      margin-top: 0.5rem;
+      animation: fadeInUp 2s ease-in-out;
+    }
+    .message {
+      margin-top: 2rem;
+      padding: 1rem;
+      max-width: 600px;
+      margin-left: auto;
+      margin-right: auto;
+      background: #fff8e1;
+      border-radius: 15px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.1);
+      animation: fadeIn 3s ease-in-out;
+      font-size: 1.1rem;
+      line-height: 1.5;
+    }
+    .gallery {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 1rem;
+      max-width: 90%;
+      margin: 2rem auto;
+      animation: fadeInUp 2s ease-in-out;
+    }
+    .gallery img {
+      width: 100%;
+      aspect-ratio: 1 / 1; /* square images */
+      object-fit: cover;
+      border-radius: 10px;
+      box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+      transition: transform 0.3s;
+      cursor: pointer;
+    }
+    .gallery img:hover {
+      transform: scale(1.05);
+    }
+    .wish-button {
+      background: linear-gradient(45deg, #fbc02d, #f9a825);
+      color: #fff;
+      padding: 1.2rem 3rem;
+      border: none;
+      border-radius: 30px;
+      margin-top: 2rem;
+      font-size: 1.4rem;
+      font-weight: 600;
+      cursor: pointer;
+      box-shadow: 0 0 15px rgba(251, 192, 45, 0.7);
+      transition: 
+        background 0.3s ease,
+        box-shadow 0.3s ease,
+        transform 0.3s ease;
+      animation: fadeInUp 2s ease-in-out;
+    }
+    .wish-button:hover {
+      background: linear-gradient(45deg, #f9a825, #fbc02d);
+      box-shadow: 0 0 30px rgba(249, 168, 37, 1);
+      transform: scale(1.1);
+    }
+    .popup {
+      display: none;
+      position: fixed;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      background: #fff9c4;
+      border-radius: 20px;
+      padding: 2rem;
+      box-shadow: 0 4px 30px rgba(0,0,0,0.3);
+      z-index: 100;
+      text-align: center;
+      animation: popIn 0.5s ease-out;
+      max-width: 90%;
+      width: 400px;
+    }
+    .popup h3 {
+      margin-bottom: 1rem;
+      color: #f57f17;
+    }
+    .popup.show {
+      display: block;
+    }
+
+    /* Birthday clip arts container */
+    #cliparts {
+      position: fixed;
+      top: 10px;
+      right: 10px;
+      z-index: 15;
+      display: flex;
+      gap: 12px;
+      pointer-events: none;
+      user-select: none;
+    }
+
+    /* Style for SVG icons */
+    #cliparts svg {
+      width: 40px;
+      height: 40px;
+      fill: #fbc02d;
+      filter: drop-shadow(0 0 3px #f9a825);
+      animation: floatClipart 4s ease-in-out infinite;
+      cursor: default;
+    }
+
+    /* Slight up-down floating animation for clip arts */
+    @keyframes floatClipart {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-8px); }
+    }
+
+    /* Position some cliparts differently for variety */
+    #cliparts svg:nth-child(2) {
+      animation-delay: 0.3s;
+      fill: #f44336; /* red */
+    }
+    #cliparts svg:nth-child(3) {
+      animation-delay: 0.6s;
+      fill: #4caf50; /* green */
+    }
+    #cliparts svg:nth-child(4) {
+      animation-delay: 0.9s;
+      fill: #2196f3; /* blue */
+    }
+
+    @keyframes fadeInDown {
+      0% { opacity: 0; transform: translateY(-20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeInUp {
+      0% { opacity: 0; transform: translateY(20px); }
+      100% { opacity: 1; transform: translateY(0); }
+    }
+    @keyframes fadeIn {
+      0% { opacity: 0; }
+      100% { opacity: 1; }
+    }
+    @keyframes bounceIn {
+      0% { transform: scale(0.8); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    @keyframes popIn {
+      0% { transform: scale(0.5); opacity: 0; }
+      100% { transform: scale(1); opacity: 1; }
+    }
+    footer {
+      margin-top: 2rem;
+      font-size: 0.9rem;
+      color: #888;
+      animation: fadeIn 2s;
+      position: relative;
+      z-index: 10;
+    }
+  </style>
+</head>
+<body>
+
+  <audio autoplay loop>
+    <source src="song.mp3" type="audio/ogg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <div id="hearts"></div>
+
+  <!-- Birthday & loving clip arts -->
+  <div id="cliparts" aria-hidden="true">
+    <!-- Balloon -->
+    <svg viewBox="0 0 64 64" aria-label="Balloon">
+      <circle cx="32" cy="24" r="16" />
+      <path d="M32 40v12" stroke="#fff" stroke-width="2" />
+      <path d="M24 52h16l-8 12z" fill="#fbc02d" />
+    </svg>
+    <!-- Birthday Cake -->
+    <svg viewBox="0 0 64 64" aria-label="Birthday Cake">
+      <rect x="12" y="28" width="40" height="20" rx="4" ry="4" />
+      <rect x="20" y="20" width="24" height="8" fill="#f9a825" rx="2" ry="2" />
+      <circle cx="32" cy="18" r="3" fill="#f44336" />
+      <rect x="30" y="10" width="4" height="8" fill="#ffeb3b" />
+    </svg>
+    <!-- Heart -->
+    <svg viewBox="0 0 64 64" aria-label="Heart">
+      <path d="M32 58s26-15 26-34a14 14 0 0 0-28 0 14 14 0 0 0-28 0c0 19 26 34 26 34z" />
+    </svg>
+    <!-- Gift Box -->
+    <svg viewBox="0 0 64 64" aria-label="Gift Box">
+      <rect x="10" y="22" width="44" height="28" rx="4" ry="4" />
+      <path d="M32 22v28M18 22l28 0" stroke="#fff" stroke-width="3" />
+      <path d="M32 22l8-12 8 12" fill="#fbc02d" />
+    </svg>
+  </div>
+
+  <div class="container">
+    <h1>Happy Birthday Nipu 🎂</h1>
+    <h2>To my dearest best friend, Nipuni</h2>
+    <div class="message">
+      <p>
+        From the day we became friends, life has been brighter, funnier, and filled with beautiful memories. Today, I just want to say thank you for being the amazing person you are. 💛<br /><br />
+        I hope your birthday is as magical as your smile and as joyful as your laughter. You're more than a friend — you're my person. Always remember how special you are to me.<br /><br />
+        Love you forever, Nipu! 💕<br /><br />
+        — Thisal
+      </p>
+    </div>
+
+    <button class="wish-button" onclick="showPopup()">Click here for a surprise wish 🎁</button>
+
+    <div class="popup" id="popup">
+      <h3>🎉 Surprise Nipu! 🎉</h3>
+      <p>
+        You are one of the most beautiful souls I've ever met.<br />
+        I wish you endless joy, laughter, and love in the year ahead. 💫<br /><br />
+        Stay amazing, my best friend!<br /><br />
+        💛 — Thisal
+      </p>
+    </div>
+
+    <div class="gallery">
+      <img src="1.jpg" alt="Memory 1" />
+      <img src="2.jpg" alt="Memory 2" />
+      <img src="3.jpg" alt="Memory 3" />
+      <img src="4.jpg" alt="Memory 4" />
+    </div>
+  </div>
+
+  <footer>Made with 💛 by Thisal for Nipu</footer>
+
+  <script>
+    // Popup show/hide
+    function showPopup() {
+      const popup = document.getElementById('popup');
+      popup.classList.add('show');
+      setTimeout(() => {
+        popup.classList.remove('show');
+      }, 6000);
+    }
+
+    // Create floating hearts animation
+    const heartsContainer = document.getElementById('hearts');
+    const heartCount = 25;
+
+    for (let i = 0; i < heartCount; i++) {
+      const heart = document.createElement('div');
+      heart.classList.add('heart');
+
+      // Random start position along the width
+      heart.style.left = Math.random() * 100 + 'vw';
+
+      // Random size between 15 and 35 px
+      const size = 15 + Math.random() * 20;
+      heart.style.width = size + 'px';
+      heart.style.height = size + 'px';
+
+      // Random animation duration between 8 and 18 seconds
+      heart.style.animationDuration = (8 + Math.random() * 10) + 's';
+
+      // Random animation delay so they float independently
+      heart.style.animationDelay = (Math.random() * 18) + 's';
+
+      heartsContainer.appendChild(heart);
+    }
+  </script>
+</body>
+</html>
