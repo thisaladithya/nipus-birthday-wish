@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
   <title>Happy Birthday Nipu 🎉</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet" />
   <style>
@@ -11,65 +11,30 @@
       padding: 0;
       box-sizing: border-box;
     }
-    body {
-      font-family: 'Poppins', sans-serif;
-      background: linear-gradient(-45deg, #fffde7, #fff9c4, #fff59d, #ffeb3b);
-      background-size: 400% 400%;
-      animation: backgroundFade 10s ease infinite;
-      color: #333;
+    html, body {
+      height: 100%;
       overflow-x: hidden;
+      font-family: 'Poppins', sans-serif;
+      background: linear-gradient(90deg, #fff9c4, #fff59d, #fff176, #ffee58);
+      background-size: 400% 400%;
+      animation: backgroundFade 15s ease infinite;
+      color: #333;
       position: relative;
       min-height: 100vh;
     }
-
     @keyframes backgroundFade {
-      0% { background-position: 0% 50%; }
-      50% { background-position: 100% 50%; }
-      100% { background-position: 0% 50%; }
+      0% {background-position: 0% 50%;}
+      50% {background-position: 100% 50%;}
+      100% {background-position: 0% 50%;}
     }
 
-    #hearts {
+    #fireworksCanvas {
       position: fixed;
-      top: 0; left: 0; right: 0; bottom: 0;
+      top: 0; left: 0;
+      width: 100vw;
+      height: 100vh;
       pointer-events: none;
-      overflow: hidden;
       z-index: 0;
-    }
-    .heart {
-      position: absolute;
-      background-color: #f06292;
-      width: 20px;
-      height: 20px;
-      transform: rotate(-45deg);
-      opacity: 0.6;
-      animation: floatUp 10s linear infinite;
-    }
-    .heart::before,
-    .heart::after {
-      content: "";
-      position: absolute;
-      background-color: #f06292;
-      border-radius: 50%;
-      width: 20px;
-      height: 20px;
-    }
-    .heart::before {
-      top: -10px;
-      left: 0;
-    }
-    .heart::after {
-      left: 10px;
-      top: 0;
-    }
-    @keyframes floatUp {
-      0% {
-        transform: translateY(0) rotate(-45deg);
-        opacity: 0.7;
-      }
-      100% {
-        transform: translateY(-100vh) rotate(-45deg);
-        opacity: 0;
-      }
     }
 
     .container {
@@ -77,6 +42,8 @@
       padding: 2rem 1rem;
       z-index: 10;
       position: relative;
+      max-width: 900px;
+      margin: 0 auto;
     }
 
     h1 {
@@ -144,6 +111,10 @@
       letter-spacing: 0.05em;
       margin-top: 2rem;
       animation: bounceGlow 1.8s infinite;
+      transition: background-color 0.3s ease;
+    }
+    .wish-button:hover {
+      background-color: #f9a825;
     }
 
     @keyframes bounceGlow {
@@ -229,6 +200,23 @@
       0% { transform: scale(0.5); opacity: 0; }
       100% { transform: scale(1); opacity: 1; }
     }
+
+    /* Responsive font sizes */
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.4rem;
+      }
+      h2 {
+        font-size: 1.2rem;
+      }
+      .message {
+        font-size: 1rem;
+      }
+      .wish-button {
+        padding: 0.6rem 2rem;
+        font-size: 1rem;
+      }
+    }
   </style>
 </head>
 <body>
@@ -236,8 +224,8 @@
   <!-- Start Overlay -->
   <div id="startOverlay">Tap anywhere to start the birthday surprise 🎉</div>
 
-  <!-- Background Hearts -->
-  <div id="hearts"></div>
+  <!-- Fireworks Canvas -->
+  <canvas id="fireworksCanvas"></canvas>
 
   <!-- Main Content -->
   <div id="mainContent" class="container">
@@ -279,6 +267,7 @@
   </audio>
 
   <script>
+    // Start overlay logic
     const overlay = document.getElementById('startOverlay');
     const mainContent = document.getElementById('mainContent');
     const audio = document.getElementById('birthdayMusic');
@@ -297,19 +286,133 @@
       }, 6000);
     }
 
-    // Floating hearts
-    const heartsContainer = document.getElementById('hearts');
-    for (let i = 0; i < 20; i++) {
-      const heart = document.createElement('div');
-      heart.classList.add('heart');
-      heart.style.left = Math.random() * 100 + 'vw';
-      const size = 15 + Math.random() * 20;
-      heart.style.width = size + 'px';
-      heart.style.height = size + 'px';
-      heart.style.animationDuration = 8 + Math.random() * 5 + 's';
-      heart.style.animationDelay = Math.random() * 5 + 's';
-      heartsContainer.appendChild(heart);
+    // Fireworks animation using Canvas
+    const canvas = document.getElementById('fireworksCanvas');
+    const ctx = canvas.getContext('2d');
+    let cw, ch;
+    function resize() {
+      cw = canvas.width = window.innerWidth;
+      ch = canvas.height = window.innerHeight;
     }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Utility function: random int in range
+    function randomInt(min, max) {
+      return Math.floor(Math.random() * (max - min + 1)) + min;
+    }
+
+    // Firework class
+    class Firework {
+      constructor() {
+        this.x = Math.random() * cw;
+        this.y = ch + 10;
+        this.targetY = randomInt(ch/4, ch/2);
+        this.speed = 3 + Math.random() * 2;
+        this.particles = [];
+        this.exploded = false;
+        this.color = `hsl(${randomInt(0, 360)}, 100%, 60%)`;
+      }
+
+      update() {
+        if (!this.exploded) {
+          this.y -= this.speed;
+          if (this.y <= this.targetY) {
+            this.explode();
+          }
+        } else {
+          this.particles.forEach(p => p.update());
+          this.particles = this.particles.filter(p => !p.dead);
+        }
+      }
+
+      draw() {
+        if (!this.exploded) {
+          ctx.beginPath();
+          ctx.arc(this.x, this.y, 3, 0, Math.PI * 2);
+          ctx.fillStyle = this.color;
+          ctx.shadowColor = this.color;
+          ctx.shadowBlur = 10;
+          ctx.fill();
+        } else {
+          this.particles.forEach(p => p.draw());
+        }
+      }
+
+      explode() {
+        this.exploded = true;
+        const count = 30 + Math.floor(Math.random() * 20);
+        for (let i = 0; i < count; i++) {
+          this.particles.push(new Particle(this.x, this.y, this.color));
+        }
+      }
+
+      isDead() {
+        return this.exploded && this.particles.length === 0;
+      }
+    }
+
+    // Particle class for explosion fragments
+    class Particle {
+      constructor(x, y, color) {
+        this.x = x;
+        this.y = y;
+        const angle = Math.random() * 2 * Math.PI;
+        const speed = Math.random() * 5 + 1;
+        this.vx = Math.cos(angle) * speed;
+        this.vy = Math.sin(angle) * speed;
+        this.gravity = 0.05;
+        this.alpha = 1;
+        this.decay = 0.015 + Math.random() * 0.015;
+        this.color = color;
+        this.dead = false;
+        this.size = 2 + Math.random() * 2;
+      }
+
+      update() {
+        this.vx *= 0.98; // friction
+        this.vy += this.gravity;
+        this.x += this.vx;
+        this.y += this.vy;
+        this.alpha -= this.decay;
+        if (this.alpha <= 0) {
+          this.dead = true;
+          this.alpha = 0;
+        }
+      }
+
+      draw() {
+        ctx.save();
+        ctx.globalAlpha = this.alpha;
+        ctx.beginPath();
+        ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+        ctx.fillStyle = this.color;
+        ctx.shadowColor = this.color;
+        ctx.shadowBlur = 5;
+        ctx.fill();
+        ctx.restore();
+      }
+    }
+
+    let fireworks = [];
+    let timer = 0;
+    const interval = 20;
+
+    function animate() {
+      ctx.clearRect(0, 0, cw, ch);
+      if (timer % interval === 0) {
+        fireworks.push(new Firework());
+      }
+      fireworks.forEach(fw => {
+        fw.update();
+        fw.draw();
+      });
+      fireworks = fireworks.filter(fw => !fw.isDead());
+      timer++;
+      requestAnimationFrame(animate);
+    }
+
+    animate();
   </script>
 </body>
 </html>
