@@ -2,31 +2,35 @@
 <html lang="en">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1" />
+  <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
   <title>Happy Birthday Nipu 🎉</title>
   <link href="https://fonts.googleapis.com/css2?family=Great+Vibes&family=Poppins:wght@300;500&display=swap" rel="stylesheet" />
   <style>
     * {
       margin: 0;
-      padding: 0;
+      padding-top: .5rem;
+      padding-top: .5rem;
       box-sizing: border-box;
     }
+
     html, body {
       height: 100%;
       overflow-x: hidden;
       font-family: 'Poppins', sans-serif;
-      background: linear-gradient(90deg, #fff9c4, #fff59d, #fff176, #ffee58);
-      background-size: 400% 400%;
-      animation: backgroundFade 15s ease infinite;
+      background: linear-gradient(135deg, #fffde7, #fff9c4, #fff59d, #ffee58, #fff176);
+      background-size: 500% 500%;
+      animation: backgroundFade 20s ease infinite;
       color: #333;
       position: relative;
       min-height: 100vh;
     }
+
     @keyframes backgroundFade {
-      0% {background-position: 0% 50%;}
-      50% {background-position: 100% 50%;}
-      100% {background-position: 0% 50%;}
+      0% { background-position: 0% 50%; }
+      50% { background-position: 100% 50%; }
+      100% { background-position: 0% 50%; }
     }
+
 
     /* Canvas for fireworks */
     #fireworksCanvas {
@@ -466,5 +470,181 @@
 }
 
   </script>
+
+<script>
+  /* ===== 💘 HEART CURSOR TRAIL ===== */
+  document.addEventListener("mousemove", (e) => {
+    const heart = document.createElement("div");
+    heart.style.position = "fixed";
+    heart.style.left = e.clientX + "px";
+    heart.style.top = e.clientY + "px";
+    heart.style.width = "15px";
+    heart.style.height = "15px";
+    heart.style.background = "red";
+    heart.style.borderRadius = "50%";
+    heart.style.pointerEvents = "none";
+    heart.style.transform = "translate(-50%, -50%)";
+    heart.style.zIndex = "9999";
+    heart.style.opacity = "0.7";
+    document.body.appendChild(heart);
+    setTimeout(() => {
+      heart.style.opacity = "0";
+      heart.style.transform = "translate(-50%, -50%) scale(2)";
+      setTimeout(() => heart.remove(), 300);
+    }, 100);
+  });
+
+  /* ===== 🎀 CLICK-TO-SPAWN HEARTS ===== */
+  document.addEventListener("click", (e) => {
+    for (let i = 0; i < 5; i++) {
+      const heart = document.createElement("div");
+      heart.innerHTML = "❤️";
+      heart.style.position = "fixed";
+      heart.style.left = e.clientX + "px";
+      heart.style.top = e.clientY + "px";
+      heart.style.fontSize = (20 + Math.random() * 20) + "px";
+      heart.style.animation = `floatHeart ${1 + Math.random() * 2}s ease-out forwards`;
+      heart.style.zIndex = "9999";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 2000);
+    }
+  });
+
+  /* ===== 💌 RANDOM LOVE NOTES ===== */
+  const loveNotes = [
+    "Nipu, you’re magical! ✨",
+    "So grateful for you 💖",
+    "Your smile lights up my day 😊",
+    "Forever your bestie 🌟",
+    "You mean the world to me 💕"
+  ];
+  function showRandomNote() {
+    setTimeout(() => {
+      const note = document.createElement("div");
+      note.textContent = loveNotes[Math.floor(Math.random() * loveNotes.length)];
+      note.style.position = "fixed";
+      note.style.left = (10 + Math.random() * 80) + "vw";
+      note.style.top = (10 + Math.random() * 80) + "vh";
+      note.style.background = "rgba(255, 235, 59, 0.9)";
+      note.style.padding = "10px 15px";
+      note.style.borderRadius = "10px";
+      note.style.zIndex = "1000";
+      note.style.animation = "noteFade 5s forwards";
+      document.body.appendChild(note);
+      setTimeout(() => note.remove(), 5000);
+      showRandomNote();
+    }, 8000 + Math.random() * 10000);
+  }
+
+
+  /* ===== 🎨 ADD CSS ANIMATIONS (SAFE ADD-ON) ===== */
+  const style = document.createElement("style");
+  style.textContent = `
+    @keyframes floatHeart {
+      0% { transform: translate(0, 0) scale(1); opacity: 1; }
+      100% { transform: translate(${Math.random() * 100 - 50}px, -100px) scale(0); opacity: 0; }
+    }
+    @keyframes noteFade {
+      0% { opacity: 0; transform: translateY(20px); }
+      20% { opacity: 1; transform: translateY(0); }
+      80% { opacity: 1; transform: translateY(0); }
+      100% { opacity: 0; transform: translateY(-20px); }
+    }
+    @keyframes floatPetal {
+      0% { transform: translateY(0) rotate(0deg); opacity: 0; }
+      10% { opacity: 0.7; }
+      100% { transform: translateY(-100vh) rotate(360deg); opacity: 0; }
+    }
+  `;
+  document.head.appendChild(style);
+
+  /* ===== 🚀 INITIALIZE EFFECTS ===== */
+  window.addEventListener("load", () => {
+    createPetals();
+    showRandomNote();
+  });
+</script>
+
+<script>// Add this to your gallery images
+document.querySelectorAll('.gallery img').forEach(img => {
+  img.addEventListener('click', () => {
+    const lightbox = document.createElement('div');
+    lightbox.style.position = 'fixed';
+    lightbox.style.top = '0';
+    lightbox.style.left = '0';
+    lightbox.style.width = '100vw';
+    lightbox.style.height = '100vh';
+    lightbox.style.background = 'rgba(0,0,0,0.9)';
+    lightbox.style.display = 'flex';
+    lightbox.style.justifyContent = 'center';
+    lightbox.style.alignItems = 'center';
+    lightbox.style.zIndex = '9999';
+    lightbox.style.cursor = 'pointer';
+
+    const fullImg = document.createElement('img');
+    fullImg.src = img.src;
+    fullImg.style.maxHeight = '90vh';
+    fullImg.style.maxWidth = '90vw';
+    fullImg.style.borderRadius = '10px';
+
+    lightbox.appendChild(fullImg);
+    document.body.appendChild(lightbox);
+
+    lightbox.addEventListener('click', () => lightbox.remove());
+  });
+});
+</script>
+
+<script>
+
+// Add this to your gallery images
+document.querySelectorAll('.gallery img').forEach(img => {
+  img.style.border = '15px solid white';
+  img.style.boxShadow = '0 3px 10px rgba(0,0,0,0.2)';
+  img.style.background = 'white';
+  img.style.padding = '5px';
+  img.style.transform = 'rotate(' + (Math.random() * 10 - 5) + 'deg)';
+});
+   
+</script>
+
+<script>
+
+  const bottle = document.createElement('div');
+bottle.innerHTML = '💌';
+bottle.style.position = 'fixed';
+bottle.style.bottom = '20px';
+bottle.style.left = '20px';
+bottle.style.fontSize = '40px';
+bottle.style.zIndex = '1000';
+bottle.style.animation = 'bounce 2s infinite';
+
+bottle.addEventListener('click', function() {
+  const note = document.createElement('div');
+  note.innerHTML = 'Message in a bottle:<br>"අහ්.. ගෑස් කෙල්ලෙ!"';
+  note.style.position = 'fixed';
+  note.style.bottom = '80px';
+  note.style.left = '20px';
+  note.style.background = 'white';
+  note.style.padding = '10px';
+  note.style.borderRadius = '10px';
+  note.style.zIndex = '1001';
+  document.body.appendChild(note);
+  setTimeout(() => note.remove(), 3000);
+});
+
+// Add bounce animation
+const bounceStyle = document.createElement('style');
+bounceStyle.textContent = `
+  @keyframes bounce {
+    0%, 100% { transform: translateY(0); }
+    50% { transform: translateY(-20px); }
+  }
+`;
+document.head.appendChild(bounceStyle);
+document.body.appendChild(bottle);
+</script>
+
+
 </body>
 </html>
